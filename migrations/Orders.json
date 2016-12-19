@@ -1,6 +1,6 @@
 {
   "Table": {
-    "TableName": "items",
+    "TableName": "orders",
     "KeySchema": [
       {
         "AttributeName": "id",

@@ -38,11 +38,11 @@ const createResponse = (statusCode, body) => (
   }
 );
 
-export const getItems = (event, context, callback) => {
-  console.log('getItems', JSON.stringify(event));
+export const getOrders = (event, context, callback) => {
+  console.log('getOrders', JSON.stringify(event));
 
   const params = {
-    TableName: 'items',
+    TableName: 'orders',
   };
 
   try {
@@ -50,7 +50,7 @@ export const getItems = (event, context, callback) => {
       if (err) {
         callback(createResponse(500, { message: err.message || 'Internal server error' }));
       } else {
-        callback(null, createResponse(200, { items: data.Items.map(mapItem) }));
+        callback(null, createResponse(200, { orders: data.Orders.map(mapItem) }));
       }
     });
   } catch (err) {
@@ -64,7 +64,7 @@ export const getItem = (event, context, callback) => {
   const path = isLocal ? event.path : event.pathParameters;
 
   const params = {
-    TableName: 'items',
+    TableName: 'orders',
     Key: {
       id: { S: path.id },
     },
@@ -102,7 +102,7 @@ export const createItem = (event, context, callback) => {
         S: moment().utc().toISOString(),
       },
     },
-    TableName: 'items',
+    TableName: 'orders',
     ConditionExpression: 'attribute_not_exists(id)',
   };
 
@@ -126,7 +126,7 @@ export const updateItem = (event, context, callback) => {
   const body = isLocal ? event.body : JSON.parse(event.body);
 
   const params = {
-    TableName: 'items',
+    TableName: 'orders',
     Key: {
       id: { S: path.id },
     },
@@ -158,7 +158,7 @@ export const deleteItem = (event, context, callback) => {
   const path = isLocal ? event.path : event.pathParameters;
 
   const params = {
-    TableName: 'items',
+    TableName: 'orders',
     Key: {
       id: { S: path.id },
     },
